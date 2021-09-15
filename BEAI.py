@@ -45,6 +45,18 @@ class BEAI:
             self.synth.runAndWait()
             self.synth.stop()
 
+    def button_module(self):
+        pass
+        # TODO: Implement button module
+
+    def keypad_module(self):
+        pass
+        # TODO: Set up input
+
+    def simon_module(self):
+        pass
+        # TODO: Implement input
+
     def simple_wire_logic(self, wires):
         if len(wires) == 3:
             if "red" not in wires:
@@ -88,6 +100,10 @@ class BEAI:
             else:
                 return "fourth wire"
 
+    def button_logic(self, color, text):
+        pass
+        # TODO: EASY, FILL IN BUTTON LOGIC HERE PROVIDED COLOR/TEXT
+
     def getLastSerial(self):
         if self.lastSerial != None:
             return self.lastSerial
@@ -102,6 +118,7 @@ class BEAI:
             digit = self.r.recognize_google(digitSource)
             self.lastSerial = digit
             return digit
+
 
 
 beai = BEAI()
