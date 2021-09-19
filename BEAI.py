@@ -24,6 +24,8 @@ class BEAI:
 
             if module == "simple wires":
                 self.simple_wire_module()
+            elif module == "button":
+                self.button_module()
 
     def simple_wire_module(self):
         print("Simple wire colors?")
