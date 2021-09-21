@@ -18,14 +18,16 @@ class BEAI:
             self.synth.runAndWait()
             self.synth.stop()
 
+            # To do: Get JSON here and check probabilities
             moduleSource = self.r.listen(source)
             module = self.r.recognize_google(moduleSource)
             print("Heard: " + module)
+            print(type(module))
 
             if module == "simple wires":
                 self.simple_wire_module()
-            elif module == "button":
-                self.button_module()
+            elif "button" in module:
+                self.button_module(module)
 
     def simple_wire_module(self):
         print("Simple wire colors?")
