@@ -49,9 +49,9 @@ class BEAI:
             self.synth.runAndWait()
             self.synth.stop()
 
-    def button_module(self):
-        pass
-        # TODO: Implement button module
+    def button_module(self, button):
+        words = button.split()
+        self.button_logic(words[0], words[1])
 
     def keypad_module(self):
         pass
