@@ -4,10 +4,18 @@ import pyttsx3
 
 class BEAI:
     def __init__(self):
-        self.serialNumber = 0;
+        self.serialNumber = 0
         self.r = sr.Recognizer()
         self.synth = pyttsx3.init()
+
         self.lastSerial = None
+        self.batteries = None
+
+    def say(self, message):
+        print(message)
+        self.synth.say(message)
+        self.synth.runAndWait()
+        self.synth.stop()
 
     def play(self):
         with sr.Microphone() as source:
@@ -30,13 +38,10 @@ class BEAI:
                 self.button_module(module)
 
     def simple_wire_module(self):
-        print("Simple wire colors?")
-        self.synth.say("simple wire colors?")
-        self.synth.runAndWait()
-        self.synth.stop()
+        self.say("simple wire colors?")
 
         with sr.Microphone() as source:
-            colorsSource = self.r.listen(source);
+            colorsSource = self.r.listen(source)
             colors = self.r.recognize_google(colorsSource)
             wires = colors.split()
             print("Heard: " + colors + " and translated to list: " + str(wires))
@@ -44,22 +49,7 @@ class BEAI:
             wire_to_cut = self.simple_wire_logic(wires)
             answer = "Cut the " + wire_to_cut
 
-            print(answer)
-            self.synth.say(answer)
-            self.synth.runAndWait()
-            self.synth.stop()
-
-    def button_module(self, button):
-        words = button.split()
-        self.button_logic(words[0], words[1])
-
-    def keypad_module(self):
-        pass
-        # TODO: Set up input
-
-    def simon_module(self):
-        pass
-        # TODO: Implement input
+            self.say(answer)
 
     def simple_wire_logic(self, wires):
         if len(wires) == 3:
@@ -104,9 +94,37 @@ class BEAI:
             else:
                 return "fourth wire"
 
+    def button_module(self, button):
+        words = button.split()
+        self.button_logic(words[0], words[1])
+
     def button_logic(self, color, text):
+        if color == 'blue' and text == 'abort':
+            self.say("Hold button")
+        elif text == 'Detonate' and self.batteries() > 1:
+            self.say("Press and release")
+
+
+
+    def keypad_module(self):
         pass
-        # TODO: EASY, FILL IN BUTTON LOGIC HERE PROVIDED COLOR/TEXT
+        # TODO: Set up input
+
+    def simon_module(self):
+        pass
+        # TODO: Implement input
+
+    def batteries(self):
+        if self.batteries != None:
+            return self.batteries
+
+        self.say("How many batteries?")
+        with sr.Microphone() as source:
+            batteries_src = self.r.listen(source)
+            batteries = self.r.recognize_google(batteries_src)
+            self.batteries = batteries
+            return batteries
+
 
     def getLastSerial(self):
         if self.lastSerial != None:
@@ -127,3 +145,4 @@ class BEAI:
 
 beai = BEAI()
 beai.play()
+
